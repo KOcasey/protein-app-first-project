@@ -1,5 +1,26 @@
 import requests
 
+G = 'GGC' #glycine
+E = 'GAA' #glutamic acid
+D = 'GAU' #aspartic acid
+V = 'GUG' #valine
+A = 'GCG' #alanine
+R = 'CGC' #arginine
+S = 'AGC' #serine
+K = 'AAA' #lysine
+N = 'AAC' #asparagine
+M = 'AUG' #methionine
+I = 'AUU' #isoluecine
+T = 'ACC' #threonine
+W = 'UGG' #tryptophan
+C = 'UGC' #cysteine
+Y = 'UAU' #tyrosine
+L = 'CUG' #leucine
+F = 'UUU' #phenylalanine
+Q = 'CAG' #glutamine
+H = 'CAU' #histidine
+P = 'CCG' #proline
+
 base_url = 'http://www.uniprot.org'
 kb_endpoint = '/uniprot/'
 
