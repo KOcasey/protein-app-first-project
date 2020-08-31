@@ -34,6 +34,47 @@ def info_name_organism (name, organism):
 
 def amino_to_rna (amino_sequence):
     rna = ''
+    for i in range(0, len(amino_sequence)):
+        if amino_sequence[i] == 'G':
+            rna += G
+        elif amino_sequence[i] == 'E':
+            rna += E
+        elif amino_sequence[i] == 'D':
+            rna += D
+        elif amino_sequence[i] == 'V':
+            rna += V
+        elif amino_sequence[i] == 'A':
+            rna += A
+        elif amino_sequence[i] == 'R':
+            rna += R
+        elif amino_sequence[i] == 'S':
+            rna += S
+        elif amino_sequence[i] == 'K':
+            rna += K
+        elif amino_sequence[i] == 'N':
+            rna += N
+        elif amino_sequence[i] == 'M':
+            rna += M
+        elif amino_sequence[i] == 'I':
+            rna += I
+        elif amino_sequence[i] == 'T':
+            rna += T
+        elif amino_sequence[i] == 'W':
+            rna += W
+        elif amino_sequence[i] == 'C':
+            rna += C
+        elif amino_sequence[i] == 'Y':
+            rna += Y
+        elif amino_sequence[i] == 'L':
+            rna += L
+        elif amino_sequence[i] == 'F':
+            rna += F
+        elif amino_sequence[i] == 'Q':
+            rna += Q
+        elif amino_sequence[i] == 'H':
+            rna += H
+        else:
+            rna += P
     return rna;
 
 def rna_to_dna (rna_sequence):
@@ -41,6 +82,7 @@ def rna_to_dna (rna_sequence):
     return dna;
 
 print(info_name_organism('lysozyme', 'human'))
+print(amino_to_rna('GEDVARSKNMITWCYLFQH'))
 
 
 
