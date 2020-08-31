@@ -24,13 +24,20 @@ P = 'CCG' #proline
 base_url = 'http://www.uniprot.org'
 kb_endpoint = '/uniprot/'
 
-def info_name (name):
-    return name;
+def protein_list_name (name):
+    query = '?query=name%3A' + name + '+AND+reviewed%3Ayes&sort=score&columns=id,reviewed,protein%20names,organism,length&format=tab'
+    response = requests.get(base_url + kb_endpoint + query)
+    return response.text;
 
-def info_name_organism (name, organism):
+def protein_list_name_organism (name, organism):
     query = '?query=name%3A' + name + '+AND+reviewed%3Ayes+organism%3A' + organism + '&sort=score&columns=id,reviewed,protein%20names,organism,length&format=tab'
     response = requests.get(base_url + kb_endpoint + query)
     return response.text;
+
+def protein_amino_sequence (id_number):
+    response = (requests.get(base_url + kb_endpoint + id_number + '.fasta')).text
+    response = response[response.find('SV=') + 2:len(response)]
+    return response;
 
 def amino_to_rna (amino_sequence):
     rna = ''
@@ -81,8 +88,12 @@ def rna_to_dna (rna_sequence):
     dna = rna_sequence.replace('U', 'T')
     return dna;
 
-print(info_name_organism('lysozyme', 'human'))
+print(protein_list_name_organism('lysozyme', 'human'))
 print(amino_to_rna('GEDVARSKNMITWCYLFQH'))
+print(protein_list_name('lysozyme'))
+print(amino_to_rna(protein_amino_sequence('P61626')))
+
+
 
 
 
