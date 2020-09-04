@@ -1,4 +1,5 @@
 import requests
+import json
 
 G = 'GGC' #glycine
 E = 'GAA' #glutamic acid
@@ -38,6 +39,14 @@ def protein_amino_sequence (id_number):
     response = (requests.get(base_url + kb_endpoint + id_number + '.fasta')).text
     response = response[response.find('SV=') + 2:len(response)]
     return response;
+
+def get_protein_function (id_number):
+    response = requests.get(base_url + kb_endpoint + id_number + '.txt').text
+    func_index = response.find('FUNCTION')
+    prot_func = response[func_index:response.find('-!-', func_index)]
+    prot_func = prot_func.replace('CC', '')
+    prot_func = " ".join(prot_func.split())
+    return prot_func;
 
 def amino_to_rna (amino_sequence):
     rna = ''
@@ -92,6 +101,7 @@ print(protein_list_name_organism('lysozyme', 'human'))
 print(amino_to_rna('GEDVARSKNMITWCYLFQH'))
 print(protein_list_name('lysozyme'))
 print(amino_to_rna(protein_amino_sequence('P61626')))
+print(get_protein_function('P61626'))
 
 
 
