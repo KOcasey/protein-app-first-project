@@ -35,10 +35,29 @@ def protein_list_name_organism (name, organism):
     response = requests.get(base_url + kb_endpoint + query)
     return response.text;
 
-def protein_amino_sequence (id_number):
-    response = (requests.get(base_url + kb_endpoint + id_number + '.fasta')).text
-    response = response[response.find('SV=') + 2:len(response)]
-    return response;
+def get_protein_amino_sequence (id_number):
+    response = requests.get(base_url + kb_endpoint + id_number + '.txt').text
+    seq_index = response.find('SQ   ') + 2
+    mw_index = response.find('MW;', seq_index) + 3
+    prot_seq = response[response.find(';', mw_index) + 1:response.find('//', seq_index)]
+    prot_seq = prot_seq.replace('CC', '')
+    prot_seq = 'SEQUENCE: ' + " ".join(prot_seq.split())
+    return prot_seq;
+
+def get_protein_amino_seq_len (id_number):
+    seq = get_protein_amino_sequence(id_number)
+    seq = seq.replace('SEQUENCE:', '')
+    seq = seq.replace(' ', '')
+    seq_len = len(seq)
+    return 'SEQUENCE LENGTH: ' + str(seq_len) + ' AA';
+
+def get_protein_molar_weight (id_number):
+    response = requests.get(base_url + kb_endpoint + id_number + '.txt').text
+    mw_index = response.find('SQ   ') + 2
+    prot_mw = response[response.find('AA;', mw_index) + 3 :response.find('MW', mw_index) + 2]
+    prot_mw = prot_mw.replace('CC', '')
+    prot_mw = " ".join(prot_mw.split())
+    return prot_mw;
 
 def get_protein_function (id_number):
     response = requests.get(base_url + kb_endpoint + id_number + '.txt').text
@@ -123,8 +142,9 @@ def rna_to_dna (rna_sequence):
 
 print(protein_list_name_organism('lysozyme', 'human'))
 print(protein_list_name('lysozyme'))
-print(amino_to_rna(protein_amino_sequence('P61626')))
-print(get_protein_miscellaneous_info('P61626'))
+print(get_protein_amino_sequence('P61626'))
+print(get_protein_molar_weight('P61626'))
+print(get_protein_amino_seq_len('P61626'))
 
 
 
