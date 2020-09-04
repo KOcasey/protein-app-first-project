@@ -48,6 +48,30 @@ def get_protein_function (id_number):
     prot_func = " ".join(prot_func.split())
     return prot_func;
 
+def get_protein_subunit (id_number):
+    response = requests.get(base_url + kb_endpoint + id_number + '.txt').text
+    sunit_index = response.find('SUBUNIT')
+    prot_sunit = response[sunit_index:response.find('-!-', sunit_index)]
+    prot_sunit = prot_sunit.replace('CC', '')
+    prot_sunit = " ".join(prot_sunit.split())
+    return prot_sunit;
+
+def get_protein_subcell_location (id_number):
+    response = requests.get(base_url + kb_endpoint + id_number + '.txt').text
+    sloc_index = response.find('SUBCELLULAR LOCATION')
+    prot_sloc = response[sloc_index:response.find('-!-', sloc_index)]
+    prot_sloc = prot_sloc.replace('CC', '')
+    prot_sloc = " ".join(prot_sloc.split())
+    return prot_sloc;
+
+def get_protein_miscellaneous_info (id_number):
+    response = requests.get(base_url + kb_endpoint + id_number + '.txt').text
+    misc_index = response.find('MISCELLANEOUS')
+    prot_misc = response[misc_index:response.find('-!-', misc_index)]
+    prot_misc = prot_misc.replace('CC', '')
+    prot_misc = " ".join(prot_misc.split())
+    return prot_misc;
+
 def amino_to_rna (amino_sequence):
     rna = ''
     for i in range(0, len(amino_sequence)):
@@ -98,10 +122,10 @@ def rna_to_dna (rna_sequence):
     return dna;
 
 print(protein_list_name_organism('lysozyme', 'human'))
-print(amino_to_rna('GEDVARSKNMITWCYLFQH'))
 print(protein_list_name('lysozyme'))
 print(amino_to_rna(protein_amino_sequence('P61626')))
-print(get_protein_function('P61626'))
+print(get_protein_miscellaneous_info('P61626'))
+
 
 
 
